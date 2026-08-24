@@ -9,7 +9,7 @@
             --primary: #10b981;
             --primary-hover: #059669;
             --bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            --card-bg: rgba(30, 41, 59, 0.85); /* Dyb, lækker mørk farve uden hvide kanter */
+            --card-bg: rgba(30, 41, 59, 0.85);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -185,8 +185,8 @@
 
     <div class="card">
         <div>
-            <span class="header-tag">Scenarie 1</span>
-            <h2>På Café i Madrid</h2>
+            <span class="header-tag" id="scenario-tag">Scenarie 1 af 3</span>
+            <h2 id="scenario-title">På Café i Madrid</h2>
         </div>
         
         <div class="divider"></div>
@@ -199,7 +199,7 @@
 
             <div>
                 <button class="hint-toggle" onclick="toggleHint()">💡 Brug for et hint?</button>
-                <div id="hint-box" class="hint-box">
+                <div id="hint-box" class="hint-box" id="hint-content">
                     <p><strong>Gloser:</strong> En kaffe = un café | Vand = agua</p>
                     <p><strong>Forslag:</strong> "Quiero un café, por favor."</p>
                 </div>
@@ -216,13 +216,55 @@
     </div>
 
     <script>
-        const scenario = {
-            npc_text: "Hola, ¿qué vas a tomar?",
-            expected_keywords: ["café", "agua", "cerveza", "vino", "té", "tapas"]
-        };
+        // Liste over scenarier
+        const scenarios = [
+            {
+                tag: "Scenarie 1 af 3",
+                title: "På Café i Madrid",
+                npc_text: "Hola, ¿qué vas a tomar?",
+                hints_gloser: "En kaffe = un café | Vand = agua",
+                hints_sagt: "Quiero un café, por favor.",
+                expected_keywords: ["café", "agua", "cerveza", "vino", "té", "tapas"]
+            },
+            {
+                tag: "Scenarie 2 af 3",
+                title: "I Lufthavnen",
+                npc_text: "¿Cuál es el propósito de su viaje?",
+                hints_gloser: "Ferie = vacaciones | Turisme = turismo",
+                hints_sagt: "Voy de vacaciones.",
+                expected_keywords: ["vacaciones", "turismo", "trabajo", "negocios"]
+            },
+            {
+                tag: "Scenarie 3 af 3",
+                title: "I Tøjbutikken",
+                npc_text: "¿Le puedo ayudar en algo?",
+                hints_gloser: "Skjorte = camisa | Bukser = pantalones",
+                hints_sagt: "Busco una camisa.",
+                expected_keywords: ["camisa", "pantalones", "chaqueta", "ayuda", "busco"]
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function loadScenario() {
+            const s = scenarios[currentIndex];
+            document.getElementById('scenario-tag').innerText = s.tag;
+            document.getElementById('scenario-title').innerText = s.title;
+            document.getElementById('npc-text').innerText = `"${s.npc_text}"`;
+            
+            document.getElementById('hint-box').innerHTML = `
+                <p><strong>Gloser:</strong> ${s.hints_gloser}</p>
+                <p><strong>Forslag:</strong> "${s.hints_sagt}"</p>
+            `;
+            document.getElementById('hint-box').style.display = 'none';
+            document.getElementById('user-text').innerText = "Din tur til at tale...";
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('feedback').className = "feedback";
+        }
 
         function speakNPC() {
-            const utterance = new SpeechSynthesisUtterance(scenario.npc_text);
+            const s = scenarios[currentIndex];
+            const utterance = new SpeechSynthesisUtterance(s.npc_text);
             utterance.lang = 'es-ES'; 
             utterance.rate = 0.9;     
             window.speechSynthesis.speak(utterance);
@@ -262,13 +304,34 @@
                 const transcript = event.results[0][0].transcript.toLowerCase();
                 userText.innerHTML = `Du sagde: "${transcript}"`;
                 
-                const passed = scenario.expected_keywords.some(kw => transcript.includes(kw));
+                const s = scenarios[currentIndex];
+                const passed = s.expected_keywords.some(kw => transcript.includes(kw));
                 
                 if (passed) {
-                    feedback.innerText = "✅ Perfekt! Tjeneren forstod dig.";
+                    feedback.innerText = "✅ Perfekt! Går til næste scenarie...";
                     feedback.classList.add('success');
+                    
+                    // Gå til næste scenarie efter 1.5 sekund
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex < scenarios.length) {
+                            loadScenario();
+                        } else {
+                            document.querySelector('.card').innerHTML = `
+                                <div>
+                                    <span class="header-tag">Færdig! 🎉</span>
+                                    <h2 style="margin-top: 1rem;">Godt gået!</h2>
+                                </div>
+                                <div class="npc-dialogue" style="font-size: 1.2rem; margin: 2rem 0;">
+                                    Du har gennemført alle scenarier og trænet dine spanske færdigheder.
+                                </div>
+                                <button class="btn-primary" onclick="currentIndex=0; loadScenario();">Start forfra</button>
+                            `;
+                        }
+                    }, 1800);
+
                 } else {
-                    feedback.innerText = "❌ Tjeneren fangede det ikke helt. Prøv igen!";
+                    feedback.innerText = "❌ Prøv igen! Fangede det ikke helt.";
                     feedback.classList.add('error');
                 }
             };
