@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Spansk Scenarie Træner</title>
+    <title>Spansk Sprogtræner</title>
     <style>
         :root {
             --primary: #10b981;
@@ -41,7 +41,7 @@
             border: none;
             outline: none;
             border-radius: 24px;
-            padding: 2rem 1.5rem;
+            padding: 1.75rem 1.5rem;
             max-width: 420px;
             width: 100%;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
@@ -49,6 +49,35 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            height: 520px; /* Fast højde så alt sidder perfekt */
+        }
+
+        /* Top Navigation / Tabs */
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .header-tag {
@@ -63,17 +92,17 @@
 
         h2 {
             margin: 0;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 300;
             color: var(--text-muted);
         }
 
         .npc-dialogue {
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 500;
-            margin: 1rem 0 0.5rem 0;
+            margin: 0.75rem 0 0.5rem 0;
             color: var(--text-main);
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         button {
@@ -94,9 +123,9 @@
         .btn-listen {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-main);
-            padding: 10px 20px;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            margin-bottom: 0.25rem;
         }
 
         .btn-listen:hover {
@@ -107,7 +136,7 @@
             background: var(--primary);
             color: white;
             width: 100%;
-            margin-top: 1rem;
+            margin-top: 0.75rem;
             font-size: 1rem;
             padding: 14px;
             box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
@@ -133,7 +162,7 @@
             background: transparent;
             color: var(--text-muted);
             font-size: 0.8rem;
-            padding: 4px 12px;
+            padding: 2px 8px;
             margin-top: 0.25rem;
         }
 
@@ -144,13 +173,13 @@
         .hint-box {
             display: none;
             background: rgba(15, 23, 42, 0.5);
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 10px;
+            margin-top: 0.25rem;
             text-align: left;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
-            line-height: 1.4;
+            line-height: 1.3;
         }
         
         .hint-box strong { color: var(--text-main); }
@@ -158,65 +187,101 @@
         .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.08);
-            margin: 1rem 0;
+            margin: 0.75rem 0;
         }
 
-        #user-text {
-            margin-top: 0.75rem;
-            min-height: 20px;
+        #user-text, #chat-user-text {
+            margin-top: 0.5rem;
+            min-height: 18px;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-style: italic;
         }
 
         .feedback {
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.95rem;
             min-height: 20px;
         }
         
         .success { color: #10b981; }
         .error { color: #ef4444; }
 
+        .mode-container {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .mode-container.active {
+            display: flex;
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div>
-            <span class="header-tag" id="scenario-tag">Scenarie 1 af 3</span>
-            <h2 id="scenario-title">På Café i Madrid</h2>
+        <!-- Top Navigation -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchMode('scenario')" id="tab-scenario">🎯 Scenarier</button>
+            <button class="tab-btn" onclick="switchMode('chat')" id="tab-chat">☕ Fri Samtale</button>
         </div>
-        
-        <div class="divider"></div>
 
-        <div>
-            <div class="npc-dialogue" id="npc-text">
-                "Hola, ¿qué vas a tomar?"
+        <!-- MODE 1: SCENARIER -->
+        <div id="mode-scenario" class="mode-container active">
+            <div>
+                <span class="header-tag" id="scenario-tag">Scenarie 1 af 3</span>
+                <h2 id="scenario-title">På Café i Madrid</h2>
             </div>
-            <button class="btn-listen" onclick="speakNPC()">🔊 Lyt til tjeneren</button>
+            
+            <div class="divider"></div>
 
             <div>
-                <button class="hint-toggle" onclick="toggleHint()">💡 Brug for et hint?</button>
-                <div id="hint-box" class="hint-box" id="hint-content">
-                    <p><strong>Gloser:</strong> En kaffe = un café | Vand = agua</p>
-                    <p><strong>Forslag:</strong> "Quiero un café, por favor."</p>
+                <div class="npc-dialogue" id="npc-text">"Hola, ¿qué vas a tomar?"</div>
+                <button class="btn-listen" onclick="speakText(scenarios[currentIndex].npc_text)">🔊 Lyt til tjeneren</button>
+                <div>
+                    <button class="hint-toggle" onclick="toggleHint()">💡 Brug for et hint?</button>
+                    <div id="hint-box" class="hint-box"></div>
                 </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <button class="btn-primary" onclick="startScenarioListening()" id="mic-btn-scenario">🎤 Tryk for at svare</button>
+                <p id="user-text">Din tur til at tale...</p>
+                <div id="feedback" class="feedback"></div>
             </div>
         </div>
 
-        <div class="divider"></div>
+        <!-- MODE 2: FRI SAMTALE (CAFÉ-SNAK) -->
+        <div id="mode-chat" class="mode-container">
+            <div>
+                <span class="header-tag">Café-snak</span>
+                <h2>Fri Spansk Dialog</h2>
+            </div>
+            
+            <div class="divider"></div>
 
-        <div>
-            <button class="btn-primary" onclick="startListening()" id="mic-btn">🎤 Tryk for at svare</button>
-            <p id="user-text">Din tur til at tale...</p>
-            <div id="feedback" class="feedback"></div>
+            <div>
+                <div class="npc-dialogue" id="chat-npc-text">"¡Hola! ¿Qué tal tu día? Cuéntame algo."</div>
+                <button class="btn-listen" onclick="speakText(currentChatPrompt)">🔊 Lyt til AI</button>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Svar frit på spansk om hvad som helst!</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div>
+                <button class="btn-primary" onclick="startChatListening()" id="mic-btn-chat">🎤 Tal med AI</button>
+                <p id="chat-user-text">Lytter efter din stemme...</p>
+                <div id="chat-feedback" class="feedback success"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Liste over scenarier
+        // --- LOGIK FOR SCENARIER ---
         const scenarios = [
             {
                 tag: "Scenarie 1 af 3",
@@ -251,7 +316,6 @@
             document.getElementById('scenario-tag').innerText = s.tag;
             document.getElementById('scenario-title').innerText = s.title;
             document.getElementById('npc-text').innerText = `"${s.npc_text}"`;
-            
             document.getElementById('hint-box').innerHTML = `
                 <p><strong>Gloser:</strong> ${s.hints_gloser}</p>
                 <p><strong>Forslag:</strong> "${s.hints_sagt}"</p>
@@ -259,12 +323,20 @@
             document.getElementById('hint-box').style.display = 'none';
             document.getElementById('user-text').innerText = "Din tur til at tale...";
             document.getElementById('feedback').innerText = "";
-            document.getElementById('feedback').className = "feedback";
         }
 
-        function speakNPC() {
-            const s = scenarios[currentIndex];
-            const utterance = new SpeechSynthesisUtterance(s.npc_text);
+        // --- LOGIK FOR FRI SAMTALE ---
+        let currentChatPrompt = "¡Hola! ¿Qué tal tu día? Cuéntame algo.";
+        const chatResponses = [
+            "¡Qué interesante! Cuéntame más sobre eso.",
+            "Entiendo perfectamente. ¿Y qué planes tienes for el fin de semana?",
+            "¡Muy bien! Oye, ¿cuál es tu comida favorita?",
+            "¡Quéကောင်း! (Qué bien!) ¿Te gustaviajar?",
+            "Interesante perspectiva. ¿Desde cuándo aprendes español?"
+        ];
+
+        function speakText(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'es-ES'; 
             utterance.rate = 0.9;     
             window.speechSynthesis.speak(utterance);
@@ -275,83 +347,104 @@
             hintBox.style.display = hintBox.style.display === 'block' ? 'none' : 'block';
         }
 
-        function startListening() {
+        function switchMode(mode) {
+            document.getElementById('mode-scenario').classList.remove('active');
+            document.getElementById('mode-chat').classList.remove('active');
+            document.getElementById('tab-scenario').classList.remove('active');
+            document.getElementById('tab-chat').classList.remove('active');
+
+            if (mode === 'scenario') {
+                document.getElementById('mode-scenario').classList.add('active');
+                document.getElementById('tab-scenario').classList.add('active');
+            } else {
+                document.getElementById('mode-chat').classList.add('active');
+                document.getElementById('tab-chat').classList.add('active');
+            }
+        }
+
+        // Scenarie Genkendelse
+        function startScenarioListening() {
+            runSpeechRecognition('es-ES', (transcript) => {
+                document.getElementById('user-text').innerHTML = `Du sagde: "${transcript}"`;
+                const s = scenarios[currentIndex];
+                const passed = s.expected_keywords.some(kw => transcript.includes(kw));
+                const feedback = document.getElementById('feedback');
+                
+                if (passed) {
+                    feedback.innerText = "✅ Perfekt! Går til næste...";
+                    feedback.className = "feedback success";
+                    setTimeout(() => {
+                        currentIndex++;
+                        if (currentIndex < scenarios.length) {
+                            loadScenario();
+                        } else {
+                            currentIndex = 0;
+                            loadScenario();
+                        }
+                    }, 1500);
+                } else {
+                    feedback.innerText = "❌ Prøv igen! Fangede det ikke.";
+                    feedback.className = "feedback error";
+                }
+            }, document.getElementById('mic-btn-scenario'));
+        }
+
+        // Fri Samtale Genkendelse
+        function startChatListening() {
+            runSpeechRecognition('es-ES', (transcript) => {
+                document.getElementById('chat-user-text').innerHTML = `Du sagde: "${transcript}"`;
+                
+                // Vælg et tilfældigt opfølgende svar fra AI'en
+                const randomReply = chatResponses[Math.floor(Math.random() * chatResponses.length)];
+                currentChatPrompt = randomReply;
+                
+                document.getElementById('chat-npc-text').innerText = `"${randomReply}"`;
+                document.getElementById('chat-feedback').innerText = "👍 Godt sagt! Lyt til AI'ens svar ovenfor.";
+                
+                // Lyt automatisk AI'ens svar op
+                speakText(randomReply);
+            }, document.getElementById('mic-btn-chat'));
+        }
+
+        // Fælles tale-til-tekst motor
+        function runSpeechRecognition(lang, onSuccess, btnElement) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            
             if (!SpeechRecognition) {
                 alert("Din browser understøtter ikke talegenkendelse. Brug Chrome eller Edge.");
                 return;
             }
             
             const recognition = new SpeechRecognition();
-            recognition.lang = 'es-ES';
+            recognition.lang = lang;
             recognition.interimResults = false;
             
-            const micBtn = document.getElementById('mic-btn');
-            const userText = document.getElementById('user-text');
-            const feedback = document.getElementById('feedback');
-            
-            micBtn.innerHTML = "🎙️ Lytter...";
-            micBtn.classList.add('listening');
-            
-            feedback.innerText = "";
-            feedback.className = "feedback";
-            userText.innerHTML = "Venter på din tale...";
+            btnElement.innerHTML = "🎙️ Lytter...";
+            btnElement.classList.add('listening');
             
             recognition.start();
             
             recognition.onresult = function(event) {
                 const transcript = event.results[0][0].transcript.toLowerCase();
-                userText.innerHTML = `Du sagde: "${transcript}"`;
-                
-                const s = scenarios[currentIndex];
-                const passed = s.expected_keywords.some(kw => transcript.includes(kw));
-                
-                if (passed) {
-                    feedback.innerText = "✅ Perfekt! Går til næste scenarie...";
-                    feedback.classList.add('success');
-                    
-                    // Gå til næste scenarie efter 1.5 sekund
-                    setTimeout(() => {
-                        currentIndex++;
-                        if (currentIndex < scenarios.length) {
-                            loadScenario();
-                        } else {
-                            document.querySelector('.card').innerHTML = `
-                                <div>
-                                    <span class="header-tag">Færdig! 🎉</span>
-                                    <h2 style="margin-top: 1rem;">Godt gået!</h2>
-                                </div>
-                                <div class="npc-dialogue" style="font-size: 1.2rem; margin: 2rem 0;">
-                                    Du har gennemført alle scenarier og trænet dine spanske færdigheder.
-                                </div>
-                                <button class="btn-primary" onclick="currentIndex=0; loadScenario();">Start forfra</button>
-                            `;
-                        }
-                    }, 1800);
-
-                } else {
-                    feedback.innerText = "❌ Prøv igen! Fangede det ikke helt.";
-                    feedback.classList.add('error');
-                }
+                onSuccess(transcript);
             };
             
             recognition.onspeechend = function() {
                 recognition.stop();
-                resetMicButton(micBtn);
+                resetBtn(btnElement);
             };
             
-            recognition.onerror = function(event) {
-                resetMicButton(micBtn);
-                feedback.innerText = "Sørg for at du har givet tilladelse til mikrofonen.";
-                feedback.classList.add('error');
+            recognition.onerror = function() {
+                resetBtn(btnElement);
             };
         }
 
-        function resetMicButton(btn) {
+        function resetBtn(btn) {
             btn.innerHTML = "🎤 Tryk for at svare";
             btn.classList.remove('listening');
         }
+
+        // Initialiser første scenarie ved load
+        loadScenario();
     </script>
 </body>
 </html>
