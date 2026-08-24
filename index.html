@@ -10,7 +10,6 @@
             --primary-hover: #059669;
             --bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -21,7 +20,7 @@
 
         html, body {
             height: 100%;
-            overflow: hidden; /* Låser siden, så der ikke kan scroles */
+            overflow: hidden;
             margin: 0;
             padding: 0;
         }
@@ -34,14 +33,14 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            height: 100dvh; /* Tilpasser sig perfekt til mobilskærme uden at skabe scroll */
+            height: 100dvh;
         }
 
         .card {
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
+            border: none; /* Kanten er fjernet her helt */
             border-radius: 24px;
             padding: 2rem 1.5rem;
             max-width: 420px;
@@ -146,7 +145,7 @@
         .hint-box {
             display: none;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Lidt blødere kant kun i hint-boxen, hvis det ønskes, eller fjern den også */
             padding: 0.75rem 1rem;
             border-radius: 12px;
             margin-top: 0.5rem;
@@ -160,7 +159,7 @@
 
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--card-border), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
             margin: 1rem 0;
         }
 
