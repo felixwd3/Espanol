@@ -9,7 +9,7 @@
             --primary: #10b981;
             --primary-hover: #059669;
             --bg-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-bg: rgba(30, 41, 59, 0.85); /* Dyb, lækker mørk farve uden hvide kanter */
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
         }
@@ -38,14 +38,13 @@
 
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: none; /* Kanten er fjernet her helt */
+            border: none;
+            outline: none;
             border-radius: 24px;
             padding: 2rem 1.5rem;
             max-width: 420px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -93,7 +92,7 @@
         }
 
         .btn-listen {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: var(--text-main);
             padding: 10px 20px;
             font-size: 0.85rem;
@@ -144,8 +143,7 @@
 
         .hint-box {
             display: none;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08); /* Lidt blødere kant kun i hint-boxen, hvis det ønskes, eller fjern den også */
+            background: rgba(15, 23, 42, 0.5);
             padding: 0.75rem 1rem;
             border-radius: 12px;
             margin-top: 0.5rem;
@@ -159,7 +157,7 @@
 
         .divider {
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: rgba(255, 255, 255, 0.08);
             margin: 1rem 0;
         }
 
