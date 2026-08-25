@@ -41,7 +41,7 @@
             border: none;
             outline: none;
             border-radius: 24px;
-            padding: 1.75rem 1.5rem;
+            padding: 1.25rem 1.5rem;
             max-width: 420px;
             width: 100%;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
@@ -49,16 +49,17 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 520px; /* Fast højde så alt sidder perfekt */
+            height: 590px; /* Tilpasset til 3 faner og ekstra kontrol */
         }
 
-        /* Top Navigation / Tabs */
+        /* Top Navigation / 3 Tabs */
         .nav-tabs {
             display: flex;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            padding: 4px;
-            margin-bottom: 1rem;
+            padding: 3px;
+            margin-bottom: 0.5rem;
+            gap: 2px;
         }
 
         .tab-btn {
@@ -66,12 +67,13 @@
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px;
-            font-size: 0.85rem;
+            padding: 6px 4px;
+            font-size: 0.75rem;
             font-weight: 500;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -80,37 +82,67 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
+        /* Vælger-knapper (Sværhedsgrad & Situationer) */
+        .selector-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .select-pill {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            padding: 5px 2px;
+            font-size: 0.7rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .select-pill.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--primary);
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
         .header-tag {
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: var(--primary);
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            margin-bottom: 0.15rem;
             display: block;
         }
 
         h2 {
             margin: 0;
-            font-size: 1.25rem;
+            font-size: 1.05rem;
             font-weight: 300;
             color: var(--text-muted);
         }
 
         .npc-dialogue {
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 500;
-            margin: 0.75rem 0 0.5rem 0;
+            margin: 0.4rem 0;
             color: var(--text-main);
-            line-height: 1.3;
+            line-height: 1.25;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         button {
             font-family: inherit;
             border: none;
             border-radius: 99px;
-            padding: 12px 24px;
-            font-size: 0.95rem;
+            padding: 10px 20px;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -123,9 +155,9 @@
         .btn-listen {
             background: rgba(255, 255, 255, 0.08);
             color: var(--text-main);
-            padding: 8px 16px;
-            font-size: 0.8rem;
-            margin-bottom: 0.25rem;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            margin-bottom: 0.2rem;
         }
 
         .btn-listen:hover {
@@ -136,9 +168,9 @@
             background: var(--primary);
             color: white;
             width: 100%;
-            margin-top: 0.75rem;
-            font-size: 1rem;
-            padding: 14px;
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+            padding: 12px;
             box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2);
         }
 
@@ -161,23 +193,18 @@
         .hint-toggle {
             background: transparent;
             color: var(--text-muted);
-            font-size: 0.8rem;
-            padding: 2px 8px;
-            margin-top: 0.25rem;
-        }
-
-        .hint-toggle:hover {
-            color: var(--text-main);
+            font-size: 0.7rem;
+            padding: 2px 6px;
         }
 
         .hint-box {
             display: none;
-            background: rgba(15, 23, 42, 0.5);
-            padding: 0.5rem 0.75rem;
-            border-radius: 10px;
-            margin-top: 0.25rem;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            margin-top: 0.2rem;
             text-align: left;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: var(--text-muted);
             line-height: 1.3;
         }
@@ -187,22 +214,22 @@
         .divider {
             height: 1px;
             background: rgba(255, 255, 255, 0.08);
-            margin: 0.75rem 0;
+            margin: 0.4rem 0;
         }
 
-        #user-text, #chat-user-text {
-            margin-top: 0.5rem;
-            min-height: 18px;
+        #user-text, #sit-user-text, #chat-user-text {
+            margin-top: 0.3rem;
+            min-height: 16px;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-style: italic;
         }
 
         .feedback {
-            margin-top: 0.25rem;
+            margin-top: 0.2rem;
             font-weight: 500;
-            font-size: 0.95rem;
-            min-height: 20px;
+            font-size: 0.85rem;
+            min-height: 18px;
         }
         
         .success { color: #10b981; }
@@ -222,9 +249,10 @@
 <body>
 
     <div class="card">
-        <!-- Top Navigation -->
+        <!-- Top Navigation (3 Faner) -->
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchMode('scenario')" id="tab-scenario">🎯 Scenarier</button>
+            <button class="tab-btn" onclick="switchMode('situation')" id="tab-situation">🛒 Situationer</button>
             <button class="tab-btn" onclick="switchMode('chat')" id="tab-chat">☕ Fri Samtale</button>
         </div>
 
@@ -239,7 +267,7 @@
 
             <div>
                 <div class="npc-dialogue" id="npc-text">"Hola, ¿qué vas a tomar?"</div>
-                <button class="btn-listen" onclick="speakText(scenarios[currentIndex].npc_text)">🔊 Lyt til tjeneren</button>
+                <button class="btn-listen" onclick="speakText(scenarios[currentIndex].npc_text, 0.9)">🔊 Lyt til tjeneren</button>
                 <div>
                     <button class="hint-toggle" onclick="toggleHint()">💡 Brug for et hint?</button>
                     <div id="hint-box" class="hint-box"></div>
@@ -255,33 +283,65 @@
             </div>
         </div>
 
-        <!-- MODE 2: FRI SAMTALE (CAFÉ-SNAK) -->
+        <!-- MODE 2: SITUATIONER (NYT ROLLESPIL MODUL) -->
+        <div id="mode-situation" class="mode-container">
+            <div>
+                <span class="header-tag">Rollespil</span>
+                <h2>Vælg en situation:</h2>
+                <div class="selector-row">
+                    <button class="select-pill active" onclick="setSituation('cafe')" id="sit-cafe">☕ Café</button>
+                    <button class="select-pill" onclick="setSituation('supermarket')" id="sit-supermarket">🛒 Supermarked</button>
+                    <button class="select-pill" onclick="setSituation('clothing')" id="sit-clothing">👕 Tøjbutik</button>
+                </div>
+            </div>
+            
+            <div class="divider" style="margin: 0.2rem 0;"></div>
+
+            <div>
+                <div class="npc-dialogue" id="sit-npc-text">"¡Hola! Bienvenidos. ¿Tienen reserva o prefieren mesa?"</div>
+                <button class="btn-listen" onclick="speakSituationPrompt()">🔊 Lyt til rollen</button>
+            </div>
+
+            <div class="divider" style="margin: 0.2rem 0;"></div>
+
+            <div>
+                <button class="btn-primary" onclick="startSituationListening()" id="mic-btn-situation">🎤 Før samtalen</button>
+                <p id="sit-user-text">Svar i rollen som kunde...</p>
+                <div id="sit-feedback" class="feedback success"></div>
+            </div>
+        </div>
+
+        <!-- MODE 3: FRI SAMTALE MED NIVEAUER -->
         <div id="mode-chat" class="mode-container">
             <div>
                 <span class="header-tag">Café-snak</span>
-                <h2>Fri Spansk Dialog</h2>
+                <h2>Vælg niveau:</h2>
+                <div class="selector-row">
+                    <button class="select-pill active" onclick="setDifficulty('beginner')" id="diff-beginner">🌱 Begynder</button>
+                    <button class="select-pill" onclick="setDifficulty('intermediate')" id="diff-intermediate">🌿 Øvet</button>
+                    <button class="select-pill" onclick="setDifficulty('advanced')" id="diff-advanced">🌳 Avanceret</button>
+                </div>
             </div>
             
-            <div class="divider"></div>
+            <div class="divider" style="margin: 0.2rem 0;"></div>
 
             <div>
-                <div class="npc-dialogue" id="chat-npc-text">"¡Hola! ¿Qué tal tu día? Cuéntame algo."</div>
-                <button class="btn-listen" onclick="speakText(currentChatPrompt)">🔊 Lyt til AI</button>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Svar frit på spansk om hvad som helst!</p>
+                <div class="npc-dialogue" id="chat-npc-text">"¡Hola! ¿Cómo te llamas?"</div>
+                <button class="btn-listen" onclick="speakChatPrompt()">🔊 Lyt til AI</button>
             </div>
 
-            <div class="divider"></div>
+            <div class="divider" style="margin: 0.2rem 0;"></div>
 
             <div>
                 <button class="btn-primary" onclick="startChatListening()" id="mic-btn-chat">🎤 Tal med AI</button>
-                <p id="chat-user-text">Lytter efter din stemme...</p>
+                <p id="chat-user-text">Svar på spansk...</p>
                 <div id="chat-feedback" class="feedback success"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- LOGIK FOR SCENARIER ---
+        // --- 1. SCENARIE LOGIK ---
         const scenarios = [
             {
                 tag: "Scenarie 1 af 3",
@@ -325,20 +385,104 @@
             document.getElementById('feedback').innerText = "";
         }
 
-        // --- LOGIK FOR FRI SAMTALE ---
-        let currentChatPrompt = "¡Hola! ¿Qué tal tu día? Cuéntame algo.";
-        const chatResponses = [
-            "¡Qué interesante! Cuéntame más sobre eso.",
-            "Entiendo perfectamente. ¿Y qué planes tienes for el fin de semana?",
-            "¡Muy bien! Oye, ¿cuál es tu comida favorita?",
-            "¡Quéကောင်း! (Qué bien!) ¿Te gustaviajar?",
-            "Interesante perspectiva. ¿Desde cuándo aprendes español?"
-        ];
+        // --- 2. SITUATIONER / ROLLESPIL LOGIK ---
+        let currentSituation = 'cafe';
+        const situationData = {
+            cafe: {
+                steps: [
+                    "¡Hola! Bienvenidos. ¿Tienen reserva o prefieren mesa?",
+                    "Muy bien, aquí tienen la mesa. ¿Qué les gustaría tomar para empezar?",
+                    "Perfecto, un café y un agua. ¿Desean algo de comer, por ejemplo unas tapas?",
+                    "Enseguida se lo traigo. ¿Algo más que necesiten por ahora?"
+                ]
+            },
+            supermarket: {
+                steps: [
+                    "¡Hola! ¿Busca algo en especial o necesita ayuda para encontrar un producto?",
+                    "Los lácteos están en el pasillo tres, al fondo a la izquierda.",
+                    "¿Encontró todo lo que buscaba? Pase por la caja número dos, por favor.",
+                    "Serían en total doce euros con cincuenta. ¿Paga con tarjeta o en efectivo?"
+                ]
+            },
+            clothing: {
+                steps: [
+                    "¡Buenos días! ¿Le puedo ayudar a buscar alguna talla o color?",
+                    "Claro, esta chaqueta en color negro es muy popular. ¿Quiere probársela?",
+                    "Los probadores están al fondo a la derecha. ¿Qué tal le queda?",
+                    "Excelente, le queda muy bien. ¿Va a ser todo por hoy?"
+                ]
+            }
+        };
 
-        function speakText(text) {
+        let currentSitStep = 0;
+
+        function setSituation(sit) {
+            currentSituation = sit;
+            currentSitStep = 0;
+            
+            document.getElementById('sit-cafe').classList.remove('active');
+            document.getElementById('sit-supermarket').classList.remove('active');
+            document.getElementById('sit-clothing').classList.remove('active');
+            document.getElementById(`sit-${sit}`).classList.add('active');
+
+            updateSituationPrompt();
+        }
+
+        function updateSituationPrompt() {
+            const prompt = situationData[currentSituation].steps[currentSitStep];
+            document.getElementById('sit-npc-text').innerText = `"${prompt}"`;
+            speakSituationPrompt();
+        }
+
+        function speakSituationPrompt() {
+            const prompt = document.getElementById('sit-npc-text').innerText.replace(/"/g, '');
+            speakText(prompt, 0.85);
+        }
+
+        // --- 3. FRI SAMTALE LOGIK ---
+        let currentDifficulty = 'beginner';
+        const chatData = {
+            beginner: {
+                speed: 0.75,
+                prompts: ["¡Hola! ¿Cómo te llamas?", "¿De dónde eres?", "¿Qué te gusta comer?", "¿Tienes hermanos eller mascotas?"]
+            },
+            intermediate: {
+                speed: 0.9,
+                prompts: ["¿Qué planes tienes para el fin de semana?", "¿Cuál es tu lugar favorito para viajar?", "¿Qué tipo de música escuchas?", "Cuéntame sobre tu trabajo."]
+            },
+            advanced: {
+                speed: 1.0,
+                prompts: ["Si pudieras vivir en cualquier país, ¿cuál elegirías?", "¿Crees que la tecnología mejora nuestra vida?", "¿Cuál ha sido tu mayor desafío?", "¿Qué opinas de aprender idiomas?"]
+            }
+        };
+
+        let currentChatIndex = 0;
+
+        function setDifficulty(level) {
+            currentDifficulty = level;
+            currentChatIndex = 0;
+            document.getElementById('diff-beginner').classList.remove('active');
+            document.getElementById('diff-intermediate').classList.remove('active');
+            document.getElementById('diff-advanced').classList.remove('active');
+            document.getElementById(`diff-${level}`).classList.add('active');
+            updateChatPrompt();
+        }
+
+        function updateChatPrompt() {
+            const prompt = chatData[currentDifficulty].prompts[currentChatIndex];
+            document.getElementById('chat-npc-text').innerText = `"${prompt}"`;
+            speakChatPrompt();
+        }
+
+        function speakChatPrompt() {
+            const prompt = document.getElementById('chat-npc-text').innerText.replace(/"/g, '');
+            speakText(prompt, chatData[currentDifficulty].speed);
+        }
+
+        function speakText(text, speed) {
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'es-ES'; 
-            utterance.rate = 0.9;     
+            utterance.rate = speed || 0.9;     
             window.speechSynthesis.speak(utterance);
         }
 
@@ -349,13 +493,18 @@
 
         function switchMode(mode) {
             document.getElementById('mode-scenario').classList.remove('active');
+            document.getElementById('mode-situation').classList.remove('active');
             document.getElementById('mode-chat').classList.remove('active');
             document.getElementById('tab-scenario').classList.remove('active');
+            document.getElementById('tab-situation').classList.remove('active');
             document.getElementById('tab-chat').classList.remove('active');
 
             if (mode === 'scenario') {
                 document.getElementById('mode-scenario').classList.add('active');
                 document.getElementById('tab-scenario').classList.add('active');
+            } else if (mode === 'situation') {
+                document.getElementById('mode-situation').classList.add('active');
+                document.getElementById('tab-situation').classList.add('active');
             } else {
                 document.getElementById('mode-chat').classList.add('active');
                 document.getElementById('tab-chat').classList.add('active');
@@ -389,20 +538,36 @@
             }, document.getElementById('mic-btn-scenario'));
         }
 
+        // Situationer / Rollespil Genkendelse
+        function startSituationListening() {
+            runSpeechRecognition('es-ES', (transcript) => {
+                document.getElementById('sit-user-text').innerHTML = `Du sagde: "${transcript}"`;
+                
+                const steps = situationData[currentSituation].steps;
+                currentSitStep = (currentSitStep + 1) % steps.length;
+                
+                const nextStepPrompt = steps[currentSitStep];
+                document.getElementById('sit-npc-text').innerText = `"${nextStepPrompt}"`;
+                document.getElementById('sit-feedback').innerText = "👍 Godt dialog-flow! Lyt til næste svar.";
+                
+                speakText(nextStepPrompt, 0.85);
+            }, document.getElementById('mic-btn-situation'));
+        }
+
         // Fri Samtale Genkendelse
         function startChatListening() {
             runSpeechRecognition('es-ES', (transcript) => {
                 document.getElementById('chat-user-text').innerHTML = `Du sagde: "${transcript}"`;
                 
-                // Vælg et tilfældigt opfølgende svar fra AI'en
-                const randomReply = chatResponses[Math.floor(Math.random() * chatResponses.length)];
-                currentChatPrompt = randomReply;
+                const data = chatData[currentDifficulty];
+                currentChatIndex = (currentChatIndex + 1) % data.prompts.length;
+                const nextPrompt = data.prompts[currentChatIndex];
                 
-                document.getElementById('chat-npc-text').innerText = `"${randomReply}"`;
-                document.getElementById('chat-feedback').innerText = "👍 Godt sagt! Lyt til AI'ens svar ovenfor.";
+                const fullResponse = `¡Entendido! ${nextPrompt}`;
+                document.getElementById('chat-npc-text').innerText = `"${fullResponse}"`;
+                document.getElementById('chat-feedback').innerText = "👍 Godt sagt! Lyt til næste spørgsmål.";
                 
-                // Lyt automatisk AI'ens svar op
-                speakText(randomReply);
+                speakText(fullResponse, data.speed);
             }, document.getElementById('mic-btn-chat'));
         }
 
@@ -443,8 +608,10 @@
             btn.classList.remove('listening');
         }
 
-        // Initialiser første scenarie ved load
+        // Start op
         loadScenario();
+        setSituation('cafe');
+        setDifficulty('beginner');
     </script>
 </body>
 </html>
